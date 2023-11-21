@@ -1,0 +1,62 @@
+import numpy as np
+import tkinter as tk
+
+#phương trình có dang A*x = B
+
+def giaiHPTTT(A,B):
+    try:
+        x = np.linalg.solve(A,B)
+        return x
+    except:
+        return None
+def hien_thi_ket_qua(ket_qua):
+    labeln_ketqua.config(text=f"Kết quả :{ket_qua}")
+
+def Nhap_ma_tran():
+    try:
+        m = int(entrymA.get())
+        n = int(entrynA.get())
+
+        valua_A = [float(val) for val in entryA.get().split(",")]
+        valua_B = [float(val) for val in entryB.get().split(",")]
+
+        A = np.array(valua_A).reshape(m,n)
+        B = np.array(valua_B)
+
+        x = giaiHPTTT(A,B)
+        if x is not None :
+            hien_thi_ket_qua(x)
+        else:
+            hien_thi_ket_qua("không thể giải phương trình")
+    except:
+        hien_thi_ket_qua("nhập giá trị đúng")
+root = tk.Tk()
+root.title("Giao diện giai hệ phương trình tuyến tính nhiều ẩn")
+root.geometry("700x700")
+labelmA = tk.Label(root,text="nhập số hàng của ma trận A:")
+labelmA.grid(row = 1,column=1)
+entrymA = tk.Entry(root,width=50)
+entrymA.grid(row = 1,column = 2)
+
+labelnA = tk.Label(root,text="nhập số cột của ma trận A:")
+labelnA.grid(row = 2,column=1)
+entrynA = tk.Entry(root,width=50)
+entrynA.grid(row = 2,column = 2)
+
+labelA = tk.Label(root,text="nhập  ma trận A:")
+labelA.grid(row = 3,column=1)
+entryA = tk.Entry(root,width=50)
+entryA.grid(row = 3,column = 2)
+
+labelB = tk.Label(root,text="nhập vector B:")
+labelB.grid(row = 4,column=1)
+entryB = tk.Entry(root,width=50)
+entryB.grid(row = 4,column = 2)
+
+labeln_ketqua = tk.Label(root,text="Hiển thị kết quả")
+labeln_ketqua.grid(row = 6,column=2)
+
+btn_giai = tk.Button(root,text="tính toán",command= Nhap_ma_tran)
+btn_giai.grid(row = 5,column =2)
+
+root.mainloop()
